@@ -1,0 +1,18 @@
+class Solution:
+    def isSubPath(self, head, root):
+        return self.dfs(head, head, root)
+
+    def dfs(self, head, cur, root):
+        if cur is None:  
+            return True
+        if root is None:  
+            return False
+        
+        if cur.val == root.val:
+            cur = cur.next
+        elif head.val == root.val:
+            head = head.next  
+        else:
+            cur = head  
+
+        return self.dfs(head, cur, root.left) or self.dfs(head, cur, root.right)
