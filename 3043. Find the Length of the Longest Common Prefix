@@ -1,0 +1,20 @@
+class Solution:
+  def longestCommonPrefix(self, arr1: List[int], arr2: List[int]) -> int:
+    vals = set()
+    for v in arr1:
+      while v != 0:
+        vals.add(v)
+        v //= 10
+
+    max_v = -1
+    for v in arr2:
+      while v != 0:
+        if v in vals:
+          max_v = max(max_v, v)
+          break
+        v //= 10
+
+    if max_v == -1:
+      return 0
+
+    return len(str(max_v))
