@@ -1,0 +1,41 @@
+from collections import deque
+class Solution:
+    def replaceValueInTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        q=deque()
+        q.append(root)
+        root.val=0
+        while q:
+            d=dict()
+            r=deque()
+            for i in q:
+                if i.left!=None:
+                    r.append(i.left)
+
+                    if i not in d:
+                        d[i]=i.left.val
+                    else:
+                        d[i]=d[i]+i.right.val
+                if i.right!=None:
+                    r.append(i.right)
+                    if i not in d:
+                        d[i]=i.right.val
+                    else:
+                        d[i]=d[i]+i.right.val
+            if len(d)>1:
+                k=sum(d.values())
+                for i in d:
+                    l=k-d[i]
+                    if i.left!=None:
+                        i.left.val=l
+                    if i.right!=None:
+                        i.right.val=l
+            else:
+                for i in d:
+                    if i.left!=None:
+                        i.left.val=0
+                    if i.right!=None:
+                        i.right.val=0
+
+            d=dict()
+            q=r
+        return root
